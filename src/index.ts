@@ -1,14 +1,26 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
+import type { Request, Response } from "express";
+import { neon } from "@neondatabase/serverless";
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 4242;
 
-app.use(express.json()); // lets Express read JSON from requests
+const sql = neon(process.env.DATABASE_URL!);
 
-app.get("/", (req, res) => {
-    res.json({ message: "Portfolio API is running" });
+app.get('/', async (req: Request, res: Response) => {
+  try {
+    const [result] = await sql`SELECT version()`;
+    const version = result?.version || 'No version found';
+    res.json({ version });
+  } catch (error) {
+    console.error('Database query failed:', error);
+    res.status(500).json({ error: 'Failed to connect to the database.' });
+  }
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Listening to http://localhost:${PORT}`);
 });
