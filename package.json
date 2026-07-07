@@ -1,37 +1,35 @@
 {
     "name": "portfolio-backend",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.ts",
-    "type": "module",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "node src/index.ts",
-        "start": "node src/index.ts"
+    "description": "Backend for portoflio",
+    "homepage": "https://github.com/koleks92/portfolio-backend#readme",
+    "bugs": {
+        "url": "https://github.com/koleks92/portfolio-backend/issues"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/koleks92/portfolio-backend.git"
     },
-    "keywords": [],
-    "author": "",
     "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/koleks92/portfolio-backend/issues"
+    "author": "koleks92",
+    "type": "module",
+    "main": "index.ts",
+    "scripts": {
+        "dev": "node --watch src/index.ts",
+        "start": "node src/index.ts"
     },
-    "homepage": "https://github.com/koleks92/portfolio-backend#readme",
     "dependencies": {
-        "@neondatabase/serverless": "^1.1.0",
+        "@prisma/adapter-pg": "^7.8.0",
         "@prisma/client": "^7.8.0",
         "dotenv": "^17.4.2",
         "express": "^5.2.1",
-        "prisma": "^7.8.0"
+        "pg": "^8.22.0"
     },
     "devDependencies": {
         "@types/express": "^5.0.6",
         "@types/node": "^26.1.0",
-        "nodemon": "^3.1.14",
-        "ts-node": "^10.9.2",
+        "@types/pg": "^8.20.0",
+        "prisma": "^7.8.0",
         "typescript": "^6.0.3"
     }
 }

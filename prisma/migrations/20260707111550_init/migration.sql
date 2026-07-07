@@ -11,6 +11,7 @@ CREATE TABLE "User" (
 CREATE TABLE "App" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
     "description1" TEXT NOT NULL,
     "description2" TEXT NOT NULL,
     "image1" TEXT NOT NULL,

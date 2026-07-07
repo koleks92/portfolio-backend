@@ -1,26 +1,18 @@
-import dotenv from "dotenv";
-dotenv.config();
+import express, { type Express, type Request, type Response } from "express";
+import {prisma} from "./lib/prisma.ts";
+import appsRouter from "./routes/apps.ts";
 
-import express from "express";
-import type { Request, Response } from "express";
-import { neon } from "@neondatabase/serverless";
 
-const app = express();
-const PORT = process.env.PORT || 4242;
+const app: Express = express();
 
-const sql = neon(process.env.DATABASE_URL!);
+// Routes
+app.use('/apps', appsRouter);
 
-app.get('/', async (req: Request, res: Response) => {
-  try {
-    const [result] = await sql`SELECT version()`;
-    const version = result?.version || 'No version found';
-    res.json({ version });
-  } catch (error) {
-    console.error('Database query failed:', error);
-    res.status(500).json({ error: 'Failed to connect to the database.' });
-  }
+app.get("/", async (req: Request, res: Response) => {
+    const apps = await prisma.app.findMany();
+    res.send("Test");
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening to http://localhost:${PORT}`);
+app.listen(3000, () => {
+    console.log("Server running on http://localhost:3000");
 });
