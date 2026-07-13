@@ -1,28 +1,27 @@
 import { Router, type Request, type Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { prisma } from '../lib/prisma.ts';
+import pool from '../lib/db.ts';
 
-const authRouter = Router();
+const router = Router();
 
-authRouter.post('/login', async (req: Request, res: Response) => {
+router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    // find user
-    const user = await prisma.user.findUnique({ where: { email } });
+    const result = await pool.query('SELECT * FROM users WHERE email=$1', [email]);
+    const user = result.rows[0];
+
     if (!user) {
         res.status(401).json({ error: 'Invalid credentials' });
         return;
     }
 
-    // check password
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
         res.status(401).json({ error: 'Invalid credentials' });
         return;
     }
 
-    // create token
     const token = jwt.sign(
         { userId: user.id },
         process.env.JWT_SECRET!,
@@ -32,4 +31,4 @@ authRouter.post('/login', async (req: Request, res: Response) => {
     res.json({ token });
 });
 
-export default authRouter;
+export default router;
