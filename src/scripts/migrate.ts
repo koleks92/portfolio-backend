@@ -1,4 +1,6 @@
-import pool from '../lib/db.ts';
+import "dotenv/config";
+
+import pool from "../lib/db.ts";
 
 await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
@@ -21,5 +23,5 @@ await pool.query(`
     );
 `);
 
-console.log('Tables created');
+console.log("Tables created");
 process.exit(0);

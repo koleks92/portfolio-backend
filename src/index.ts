@@ -1,8 +1,13 @@
 import express, { type Express, type Request, type Response } from "express";
 import appsRouter from "./routes/apps.ts";
 import authRouter from "./routes/auth.ts";
+import cors from "cors";
+
 
 const app: Express = express();
+
+app.use(cors());
+
 
 // Routes
 app.use('/apps', appsRouter);
