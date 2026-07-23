@@ -2,6 +2,7 @@ import express, { type Express, type Request, type Response } from "express";
 import appsRouter from "./routes/apps.ts";
 import authRouter from "./routes/auth.ts";
 import cors from "cors";
+import uploadRouter from "./routes/upload.ts";
 
 const app: Express = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 // Routes
 app.use("/apps", appsRouter);
 app.use("/auth", authRouter);
+app.use("/upload", uploadRouter);
 
 app.get("/", async (req: Request, res: Response) => {
   res.send("Test");
